@@ -7,7 +7,8 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private HealthHandler _healthHandler;
-
+    [SerializeField] private EnemyAnimation _enemyAnimation;
+    [SerializeField] private float _delaybeforeDestroying;
     private void Start()
     {
         _healthHandler.Died += OnDied;
@@ -20,6 +21,8 @@ public class Enemy : MonoBehaviour
 
     private void OnDied()
     {
-        Destroy(gameObject);
+        _enemyAnimation.PlayAnimationDying();
+        Destroy(gameObject,3f);
+        
     }
 }
