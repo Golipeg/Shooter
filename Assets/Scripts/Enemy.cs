@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
     private void OnDied()
     {
         _enemyAnimation.PlayAnimationDying();
-        Destroy(gameObject,3f);
+        Destroy(gameObject,_delaybeforeDestroying);
         
     }
 }
