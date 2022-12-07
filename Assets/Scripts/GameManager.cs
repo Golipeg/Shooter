@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     {
         if (_shouldLockCursor)
         {
-            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.lockState = CursorLockMode.Confined;
         }
         
     }

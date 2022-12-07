@@ -112,8 +112,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 6790331193780573300}
-  _speed: 50
+  _speed: 15
   _damage: 50
+  _lifeTime: 5
 --- !u!54 &6790331193780573300
 Rigidbody:
   m_ObjectHideFlags: 0
