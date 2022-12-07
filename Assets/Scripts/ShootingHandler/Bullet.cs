@@ -8,6 +8,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private float _speed=10f;
     [SerializeField] private int _damage = 50;
+    [SerializeField] private float _lifeTime = 5f;
 
     private void Awake()
     {
@@ -17,6 +18,7 @@ public class Bullet : MonoBehaviour
     public void Initialize(Vector3 direction)
     {
         _rigidbody.velocity = direction * _speed;
+        Destroy(gameObject,_lifeTime);
     }
 
     public void OnCollisionEnter(Collision other)

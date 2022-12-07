@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 
@@ -15,16 +16,16 @@ public class BulletsCounter : MonoBehaviour
     {
         _bulletsQuantity.text = START_BULLET_QUANTITY.ToString();
         _currentBulletQuantity = START_BULLET_QUANTITY;
-        _playerWeaponHandler.OnShoot += UpdateAmmo;
+        _playerWeaponHandler.OnShoot += DecreaseBullets;
 
     }
 
     private void OnDisable()
     {
-        _playerWeaponHandler.OnShoot -= UpdateAmmo;
+        _playerWeaponHandler.OnShoot -= DecreaseBullets;
     }
 
-    private void UpdateAmmo()
+    private void DecreaseBullets()
     {
         if (_currentBulletQuantity > 0)
         {
@@ -37,5 +38,12 @@ public class BulletsCounter : MonoBehaviour
             Debug.Log("EmptyAmmo");
             OnEmptyAmmo?.Invoke(true);
         }
+    }
+    [UsedImplicitly]
+    public void Recharge()
+    { 
+        _bulletsQuantity.text = START_BULLET_QUANTITY.ToString();
+        _currentBulletQuantity = START_BULLET_QUANTITY;
+        OnEmptyAmmo?.Invoke(false);
     }
 }

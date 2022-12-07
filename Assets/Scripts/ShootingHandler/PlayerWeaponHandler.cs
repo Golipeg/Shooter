@@ -7,7 +7,7 @@ using UnityEngine;
 public class PlayerWeaponHandler : MonoBehaviour
 {
     [SerializeField] private Weapon _weapon;
-    private BulletsCounter _bulletsCounter;
+    [SerializeField] private BulletsCounter _bulletsCounter;
     public event Action OnShoot;
    
     private void Update()
@@ -16,6 +16,10 @@ public class PlayerWeaponHandler : MonoBehaviour
         {
             _weapon.Shoot();
             OnShoot?.Invoke();
+        }
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            _bulletsCounter.Recharge();
         }
     }
 }
