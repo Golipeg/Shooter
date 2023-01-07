@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerAnimationHandler))]
+[RequireComponent(typeof(PlayerAimController))]
+[RequireComponent(typeof(PlayerInputHandler))]
+[RequireComponent(typeof(AnimationHandler))]
 [RequireComponent(typeof(PlayerMovementHandler))]
 [RequireComponent(typeof(HealthHandler))]
 [RequireComponent(typeof(PlayerRotationHandler))]
@@ -12,26 +14,46 @@ public class Player : MonoBehaviour
     private PlayerRotationHandler _rotationHandler;
     private PlayerMovementHandler _movementHandler;
     private HealthHandler _healthHandler;
-    private PlayerAnimationHandler _animationHandler;
+    private AnimationHandler _animationHandler;
+    private PlayerInputHandler _inputHandler;
+    private PlayerAimController _aimController;
+    [SerializeField] private CameraController _cameraController;
+
 
     private void Awake()
     {
         _rotationHandler = GetComponent<PlayerRotationHandler>();
-        _movementHandler= GetComponent<PlayerMovementHandler>();
+        _movementHandler = GetComponent<PlayerMovementHandler>();
         _healthHandler = GetComponent<HealthHandler>();
-        _animationHandler = GetComponent<PlayerAnimationHandler>();
+        _animationHandler = GetComponent<AnimationHandler>();
+        _inputHandler = GetComponent<PlayerInputHandler>();
+        _aimController = GetComponent<PlayerAimController>();
+        _inputHandler.AimModeChanged += OnAimModeChanged;
         _healthHandler.Died += OnDied;
+    }
+
+    private void OnAimModeChanged()
+    {
+        _aimController.SetAimingState(!_aimController.IsAiming);
+        _movementHandler.SetAimingState(_aimController.IsAiming);
+        _cameraController.SetAimingMode(_aimController.IsAiming);
     }
 
     private void OnDestroy()
     {
-        _healthHandler.Died -= OnDied;
+        if (_healthHandler != null)
+        {
+            _healthHandler.Died -= OnDied;
+        }
+
+        if (_inputHandler != null)
+        {
+            _inputHandler.AimModeChanged -= OnAimModeChanged;
+        }
     }
 
     private void OnDied()
     {
         _animationHandler.PlayDieAnimation();
-        _movementHandler.enabled = false;
-        _rotationHandler.enabled = false;
     }
 }

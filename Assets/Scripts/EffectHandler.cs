@@ -9,7 +9,7 @@ public class EffectHandler : MonoBehaviour
     {
         var hitEffect=Instantiate(_hitEffect, hitPosition, Quaternion.LookRotation(normal));
         hitEffect.Play();
-       Destroy(hitEffect,_hitEffectDuration);
+       Destroy(hitEffect.gameObject,_hitEffectDuration);
     }
 
    

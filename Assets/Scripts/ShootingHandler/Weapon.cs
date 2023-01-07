@@ -17,16 +17,8 @@ public class Weapon : MonoBehaviour
             var bullet = Instantiate(_bullet, _muzzle.position, _muzzle.rotation);
             bullet.Initialize(_muzzle.forward);
             _muzzleEffect.Play();
-            StartCoroutine(StopPlayingEffect(_muzzleEffect));
         }
     }
-
-    private IEnumerator StopPlayingEffect(ParticleSystem effect)
-    {
-        yield return new  WaitForSeconds(0.1f);
-        effect.Stop();
-    }
-
     private void OnEnable()
     {
         _bulletsCounter.OnEmptyAmmo += CheckRestAmmo;
